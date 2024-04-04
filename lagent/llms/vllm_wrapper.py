@@ -57,6 +57,9 @@ class VllmModel(BaseModel):
         max_new_tokens = gen_params.pop('max_new_tokens')
         stop_words = gen_params.pop('stop_words')
 
+        # `vllm` does not accept the parameter `do_sample` so must remove it
+        _ = gen_params.pop('do_sample', "")
+
         sampling_config = SamplingParams(
             skip_special_tokens=skip_special_tokens,
             max_tokens=max_new_tokens,
